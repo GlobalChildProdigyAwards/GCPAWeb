@@ -6,4 +6,5 @@
     NumberOfImages: number;
     Status:boolean;
     Images:string[];
+    Discounts: any;
   }

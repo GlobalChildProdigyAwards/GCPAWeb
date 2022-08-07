@@ -18,7 +18,7 @@ export class NewProductComponent implements OnInit {
   newImage=false;
   numberNewImage:number[]=[];
     constructor(private router: Router,public authService:AuthServiceService, public uploadService:FileUploadService, public ecommerceService:EcommerceDashboardService) { }
-  product:Ecommerce={ProductName:"",Disc:"",Status:false,Images:[],NumberOfImages:0, ProductId:"", Price:0};
+  product:Ecommerce={ProductName:"",Disc:"",Status:false,Images:[],NumberOfImages:0, ProductId:"", Price:0, Discounts:{'1':0}};
     ngOnInit(): void {
       console.log(this.product);
       if (this.authService.user) {

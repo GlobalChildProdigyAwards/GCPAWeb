@@ -19,6 +19,8 @@ export class ProductsComponent implements OnInit {
   paymentStatus: string
   public rzp: any;
   orderId: any;
+  grandTotal:number;
+  discountPercentage:number;
 
   public options: any = {
     key: '',
@@ -87,16 +89,40 @@ export class ProductsComponent implements OnInit {
     this.productName = this.route.snapshot.params[ 'productName' ]
     this.productId = this.route.snapshot.params[ 'productId' ]
     this.ecommerceService.getproductById(this.productId);
+    this.ecommerceService.productDataStateObservable.subscribe((data)=>{
+      if(data){
+        this.discountPercentage = 0;
+        this.grandTotal = this.ecommerceService.product.Price * this.quantity;
+      }
+    })
+    console.log(this.grandTotal);
 
   }
   add(){
     this.quantity+=1;
+    this.calculateDiscountedPrice();
   }
   minus(){
     if (this.quantity!=1) {
 
       this.quantity-=1;
+      this.calculateDiscountedPrice();
     }
+  }
+
+  calculateDiscountedPrice(){
+    let discountAmount;
+    this.grandTotal = this.quantity*this.ecommerceService.product.Price;
+    console.log(this.ecommerceService.product.Discounts);
+    if(this.ecommerceService.product.Discounts.has(this.quantity.toString())){
+          this.discountPercentage = this.ecommerceService.product.Discounts.get(this.quantity.toString());
+          console.log(this.discountPercentage);
+          discountAmount = (this.discountPercentage/100)*this.quantity*this.ecommerceService.product.Price;
+          this.grandTotal -= discountAmount;
+    }      
+
+
+
   }
 
   proceedToCheckout(){
@@ -107,7 +133,7 @@ this.checkout=true;
     this.order.Quantity=this.quantity;
     this.order.ProductId=this.productId;
     this.order.ProductName=this.productName;
-    this.order.TotalPrice=this.quantity*this.ecommerceService.product.Price;
+    this.order.TotalPrice=this.grandTotal;
     this.order.UserUid=this.authService.loggedInUser.Uid;
     console.log(this.order);
     this.orderService.addOrder(this.order)

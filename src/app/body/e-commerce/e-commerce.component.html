@@ -7,7 +7,7 @@
     <ng-container *ngFor="let product of ecommerceService.products">
 
       <div class="row container mx-auto">
-        <div class="card mb-3 col mx-auto" style="max-width: 750px;" (click)="goToProduct(product)" >
+        <div class="card mb-3 col mx-auto" style="max-width: 750px; cursor: pointer;" (click)="goToProduct(product)" >
             <div class="row g-0">
               <div class="col-md-4 tr">
                 <div>
@@ -15,7 +15,7 @@
                     <ng-container *ngFor="let image of product.Images">
                       <ng-template carouselSlide class="px-2 ">
                       <div class="slide py-2 my-auto px-2 " >
-                        <img [src]="image" alt="" style="max-height: 200px;">
+                        <img [src]="image" alt="" style="text-align: center;">
                       </div>
                     </ng-template>
                   </ng-container>
@@ -24,7 +24,7 @@
             </div>
               <div class="col-md-1"></div>
               <div class="col-md-7">
-                <div class="card-body">
+                <div class="card-body" >
                   <h2 class="card-title fw-bolder">{{product.ProductName}}</h2>
                   <p class="card-text">{{product.Disc}}</p>
                   <p class="card-text fw-bold pt-3"><small class="text-muted">Price:₹ </small> {{product.Price}}</p>

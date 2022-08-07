@@ -5,6 +5,40 @@ h1 {
     font-family: 'Amaranth', sans-serif!important;
 }
 
+.wrapper{
+	position: relative;
+}
+.sidebar{
+	position: fixed;
+	width: 250px;
+	height: 100%;
+	background: #4F94CF;
+	padding: 10px 0;
+	    
+}
+.wrapper .sidebar ul li{
+	padding: 15px;	
+    cursor: pointer;
+    border-radius: 5px;
+}
+.wrapper .sidebar ul li{
+	color: #fff;
+	display: block;
+}
+.wrapper .sidebar ul li a .fas{
+	width: 25px!important;
+}
+.wrapper .sidebar ul li a .far{
+	width: 25px!important;
+}
+.wrapper .sidebar ul li:hover{
+	background: #EF388A !important;
+}
+.wrapper .sidebar ul li a:hover{
+	color: #fff;
+	text-decoration: none;
+}
+
 @media (min-width: 576px) {
     .container {
         max-width: 540px;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { map } from 'rxjs';
+import { map, Subject } from 'rxjs';
 import { Ecommerce } from 'src/app/Interfaces/Ecommerce';
 import { AuthServiceService } from '../auth-service/auth-service.service';
 import { UpdateRegistrationService } from '../update-registration/update-registration.service';
@@ -11,6 +11,8 @@ import { UpdateRegistrationService } from '../update-registration/update-registr
 export class EcommerceDashboardService {
   products:Ecommerce[]=[]
   product:Ecommerce;
+  private productDataState: Subject<boolean> = new Subject<boolean>();
+  public productDataStateObservable = this.productDataState.asObservable();
 
   constructor(public functions: AngularFireFunctions, public updateRegistration: UpdateRegistrationService , public authService:AuthServiceService) { }
   addProduct(product:Ecommerce)  {
@@ -46,19 +48,23 @@ export class EcommerceDashboardService {
   });
 }
   getproductById(productId:string){
+    this.productDataState.next(false);
     const callable = this.functions.httpsCallable("ecommerce/getProductById");
   callable({productId:productId }).pipe(map(res=>{
+    console.log(res);
     const data = res.data as Ecommerce;
     return data;
   })).subscribe({
     next: (data) => {
       this.product = data;
       console.log(this.product);
+      this.product.Discounts = new Map(Object.entries(this.product.Discounts));
     },
     error: (error) => {
       console.error(error);
     },
     complete: () => {
+      this.productDataState.next(true);
       console.info('Getting Products successful')
     }
   });

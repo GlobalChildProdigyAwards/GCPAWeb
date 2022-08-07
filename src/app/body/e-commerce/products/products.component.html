@@ -14,7 +14,7 @@
                         <owl-carousel-o class="text-centre"  [options]="customOptions" (translated)="getPassedData($event)">
                             <ng-container *ngFor="let image of ecommerceService.product.Images">
                         <ng-template carouselSlide class="px-2 ">
-                            <div class="slide py-2 my-auto px-2 " >
+                            <div class="slide" >
                                 <img [src]="image" alt="" >
                             </div>
                         </ng-template>
@@ -101,15 +101,16 @@
                       <p class="card-text fw-bold pt-3"><small class="text-muted" style="float: left;">Price:₹ </small> {{ecommerceService.product.Price}}</p>
                       <p class="fw-bold"> <small class="text-muted" style="float: left;">Quantity: </small> {{quantity}}</p>
                       <hr>
-                      <p class="fw-bold" ><small  style="float: left;">Price to Pay:₹ </small>{{ecommerceService.product.Price*quantity}}</p>
+                      <p class="fw-bold" ><small  style="float: left;">M.R.P:₹ </small><span [ngStyle]="{'text-decoration': grandTotal != ecommerceService.product.Price*quantity ? 'line-through' : 'none' }">{{ecommerceService.product.Price*quantity}}</span></p>
+                      <hr *ngIf="discountPercentage != 0">
+                      <p class="fw-bold" *ngIf="discountPercentage != 0" ><small  style="float: left;">Discount:% </small><span>{{discountPercentage}}</span></p>
+                      <hr>
+                      <p class="fw-bold" ><small  style="float: left;">Grand Total:₹ </small>{{grandTotal}}</p>
                       <hr>
                       <button class="btn btn-outline-dark" (click)="proceedToCheckout()" *ngIf="!checkout">Proceed To Checkout</button>
                       <button class="btn btn-outline-dark" (click)="proceedToPayment()" *ngIf="checkout">Proceed To Payment</button>
                     </div>
               </div>
         </div>
-        <!-- <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-outline-dar mx-auto">Buy Now</button>
-        </div> -->
     </div>
   </div>
