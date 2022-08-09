@@ -16,7 +16,7 @@ export class RawDataServiceService {
   constructor(public functions: AngularFireFunctions, public updateRegistration: UpdateRegistrationService , public authService:AuthServiceService) { }
 
   getRawData(){
-    
+    // console.log("k")
     const callable = this.functions.httpsCallable("rawDatas/getRawData");
     callable({}).pipe(map(res=>{
       const data = res.data as RawData;

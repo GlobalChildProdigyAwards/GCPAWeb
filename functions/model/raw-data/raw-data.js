@@ -9,6 +9,7 @@ const { getRawData } = require("./tark/getRawData");
 const { fastify, functions, cors, requestHandler } = require("../application/lib");
 
 fastify.post("/createRawData", (req, res) => {
+    console.log("n");
     createRawData(req, res);
 });
 fastify.post("/updateRawData", (req, res) => {
